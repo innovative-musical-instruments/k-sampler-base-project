@@ -130,7 +130,7 @@ phaserRateBroadcaster.addComponentPropertyListener(
     {
         var idx = Math.round(value);
         if (idx < 0) idx = 0;
-        if (idx > 21) idx = 21;
+        if (idx > 20) idx = 20;
         return phaserTempoNames[idx];
     }
 );
@@ -321,7 +321,7 @@ linkTribalTools.setControlCallback(onLinkTribalToolsControl);
 
 inline function onLinkGithubControl(component, value)
 {
-    if (value) Engine.openWebsite("https://github.com/innovative-musical-instruments/kadabra-electronic-drumkit");
+    if (value) Engine.openWebsite("https://github.com/innovative-musical-instruments/REPO_NAME");
 }
 linkGithub.setControlCallback(onLinkGithubControl);
 
@@ -437,8 +437,8 @@ inline function setupSampleFolder()
     // Build expected standard samples path for this user
     local userHome = FileSystem.getFolder(FileSystem.UserHome);
     local standardSamples = userHome.getChildFile(
-        "Music/IMI/Kadabra Electronic Drumkit/Samples"
-    );
+    "Music/IMI/INSTRUMENT_NAME/Samples"
+);
     
     // If samples exist in standard location, write/overwrite link file
     if (isDefined(standardSamples) && standardSamples.isDirectory())
