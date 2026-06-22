@@ -6,23 +6,23 @@ const var saturationBroadcaster = Engine.createBroadcaster({
   "args": ["component", "value"],
   "tags": []
 });
-// attach to event Type
 saturationBroadcaster.attachToComponentValue(["Saturation"], "");
-// attach first listener
 saturationBroadcaster.addComponentPropertyListener(["saturationValue"], ["text"], "SaturationValue", function(index, component, value){
 	return Math.round(value * 100) + "%";
 });
+
 // Brightness Broadcaster
 const var brightnessBroadcaster = Engine.createBroadcaster({
   "id": "brightnessBroadcaster",
   "args": ["component", "value"],
   "tags": []
 });
-// Delay Mix Broadcaster
 brightnessBroadcaster.attachToComponentValue(["Brightness"], "");
 brightnessBroadcaster.addComponentPropertyListener(["brightnessValue"], ["text"], "BrightnessValue", function(index, component, value){
 	return Math.round(value * 10) / 10 + "dB";
 });
+
+// Delay Mix Broadcaster
 const var delayMixBroadcaster = Engine.createBroadcaster({
   "id": "delayMixBroadcaster",
   "args": ["component", "value"],
@@ -32,10 +32,15 @@ delayMixBroadcaster.attachToComponentValue(["Delay Mix"], "");
 delayMixBroadcaster.addComponentPropertyListener(["delayMixValue"], ["text"], "DelayMixValue", function(index, component, value){
 	return Math.round(value * 100) + "%";
 });
+
 // tempoNames array for TempoSync knobs
+// Note: knob indices 0-18 map to these 19 divisions (HISE_USE_EXTENDED_TEMPO_VALUES adds
+// 5 slow divisions before "1/1" in the internal table — SYNC_OFFSET compensates for this)
 const var tempoNames = ["1/1","1/2D","1/2","1/2T","1/4D","1/4","1/4T",
                         "1/8D","1/8","1/8T","1/16D","1/16","1/16T",
                         "1/32D","1/32","1/32T","1/64D","1/64","1/64T"];
+
+// phaserTempoNames: 21 entries (indices 0-20), starting at "8/1"
 const var phaserTempoNames = ["8/1","6/1","4/1","3/1","2/1",
                               "1/1","1/2D","1/2","1/2T","1/4D","1/4","1/4T",
                               "1/8D","1/8","1/8T","1/16D","1/16","1/16T",
@@ -47,34 +52,30 @@ const var reverbMixBroadcaster = Engine.createBroadcaster({
   "args": ["component", "value"],
   "tags": []
 });
-// attach to event Type
 reverbMixBroadcaster.attachToComponentValue(["Reverb Mix"], "");
-// attach first listener
 reverbMixBroadcaster.addComponentPropertyListener(["reverbMixValue"], ["text"], "ReverbMixValue", function(index, component, value){
 	return Math.round(value * 100) + "%";
 });
+
 // Reverb Time Broadcaster
 const var reverbTimeBroadcaster = Engine.createBroadcaster({
   "id": "reverbTimeBroadcaster",
   "args": ["component", "value"],
   "tags": []
 });
-// attach to event Type
 reverbTimeBroadcaster.attachToComponentValue(["Reverb Time"], "");
-// attach first listener
 reverbTimeBroadcaster.addComponentPropertyListener(["reverbTimeValue"], ["text"], "ReverbTimeValue", function(index, component, value){
 	var seconds = 0.2 * Math.pow(6.0 / 0.2, value);
 	return Math.round(seconds * 10) / 10 + "s";
 });
+
 // Filter Freq Broadcaster
 const var filterFreqBroadcaster = Engine.createBroadcaster({
   "id": "filterFreqBroadcaster",
   "args": ["component", "value"],
   "tags": []
 });
-// attach to event Type
 filterFreqBroadcaster.attachToComponentValue(["Fliter Freq"], "");
-// attach first listener
 filterFreqBroadcaster.addComponentPropertyListener(["filterFreqValue"], ["text"], "FilterFreqValue", function(index, component, value){
 	if (value >= 1000) return Math.round(value / 100) / 10 + "kHz";
 	return Math.round(value) + "Hz";
@@ -86,29 +87,26 @@ const var filterResBroadcaster = Engine.createBroadcaster({
   "args": ["component", "value"],
   "tags": []
 });
-// attach to event Type
 filterResBroadcaster.attachToComponentValue(["Filter Res"], "");
-// attach first listener
 filterResBroadcaster.addComponentPropertyListener(["filterResValue"], ["text"], "FilterResValue", function(index, component, value){
 	return Engine.doubleToString(value, 1) + "Q";
 });
+
 // Phaser Depth Broadcaster
 const var phaserDepthBroadcaster = Engine.createBroadcaster({
   "id": "phaserDepthBroadcaster",
   "args": ["component", "value"],
   "tags": []
 });
-// attach to event Type
 phaserDepthBroadcaster.attachToComponentValue(["Phaser Depth"], "");
-// attach first listener
 phaserDepthBroadcaster.addComponentPropertyListener(["phaserDepthValue"], ["text"], "PhaserDepthValue", function(index, component, value){
 	return Engine.doubleToString(value * 100, 0) + "%";
 });
+
 // --- Phaser Rate section ---
 const var PhaserRateKnob = Content.getComponent("Phaser Rate");
 const var Phaser1LFO = Synth.getModulator("LFO Modulator1");
 
-// Apply tempo-table offset so knob index 0 = "4/1", index 21 = "1/64T"
 inline function onPhaserRateControl(component, value)
 {
     Phaser1LFO.setAttribute(Phaser1LFO.getAttributeIndex("Frequency"), value);
@@ -123,13 +121,13 @@ const var phaserRateBroadcaster = Engine.createBroadcaster({
 });
 phaserRateBroadcaster.attachToComponentValue(["Phaser Rate"], "");
 phaserRateBroadcaster.addComponentPropertyListener(
-    ["phaserRateValue"], 
-    ["text"], 
-    "PhaserRateValue", 
+    ["phaserRateValue"],
+    ["text"],
+    "PhaserRateValue",
     function(index, component, value)
     {
         var idx = Math.round(value);
-        if (idx < 0) idx = 0;
+        if (idx < 0)  idx = 0;
         if (idx > 20) idx = 20;
         return phaserTempoNames[idx];
     }
@@ -141,13 +139,13 @@ const var outputGainBroadcaster = Engine.createBroadcaster({
   "args": ["component", "value"],
   "tags": []
 });
-// attach to event Type
 outputGainBroadcaster.attachToComponentValue(["Output Gain"], "");
-// attach first listener
 outputGainBroadcaster.addComponentPropertyListener(["outputGainValue"], ["text"], "OutputGainValue", function(index, component, value){
     if (value <= -100.0) return "-inf dB";
     return Engine.doubleToString(value, 1) + "dB";
 });
+
+// --- Presets / About panel toggles ---
 const var presetsButton = Content.getComponent("presetsButton");
 const var presetsManager = Content.getComponent("presetsManager");
 const var aboutButton = Content.getComponent("aboutButton");
@@ -156,7 +154,7 @@ const var aboutPanel = Content.getComponent("aboutPanel");
 inline function onAboutButtonControl(component, value)
 {
     aboutPanel.set("visible", value);
-    if (value) 
+    if (value)
     {
         presetsManager.set("visible", false);
         presetsButton.setValue(0);
@@ -177,21 +175,30 @@ presetsButton.setControlCallback(onPresetsButtonControl);
 aboutButton.setControlCallback(onAboutButtonControl);
 
 // --- Delay section ---
-const var DelayTimeKnob = Content.getComponent("Delay Time");
+const var DelayTimeKnob    = Content.getComponent("Delay Time");
 const var DelayFeedbackKnob = Content.getComponent("Delay Feedback");
-const var DelaySyncMode = Content.getComponent("delaySyncMode");
-const var Delay1 = Synth.getEffect("Delay1");
-const var SYNC_OFFSET = 5; // HISE_USE_EXTENDED_TEMPO_VALUES adds 5 slow values before "1/1";
+const var DelaySyncMode    = Content.getComponent("delaySyncMode");
+const var Delay1           = Synth.getEffect("Delay1");
+const var SYNC_OFFSET      = 5; // HISE_USE_EXTENDED_TEMPO_VALUES prepends 5 slow divisions before "1/1"
+
+// Hidden memory knobs — saved/restored automatically by HISE with presets
+// delayFreeMemory: min=1, max=2500, default=400
+// delaySyncMemory: min=0, max=18,   default=8
+const var delayFreeMemory = Content.getComponent("delayFreeMemory");
+const var delaySyncMemory = Content.getComponent("delaySyncMemory");
 
 // L/R mirror: Delay Time
 inline function onDelayTimeControl(component, value)
 {
-    local sendValue = value;
-    if (DelaySyncMode.getValue() == 1) // Sync mode — offset into extended tempo table
-        sendValue = value + SYNC_OFFSET;
-    
+    var sendValue = (DelaySyncMode.getValue() == 1) ? value + SYNC_OFFSET : value;
     Delay1.setAttribute(0, sendValue); // DelayTimeLeft
     Delay1.setAttribute(1, sendValue); // DelayTimeRight
+
+    // Save to appropriate memory knob for preset recall
+    if (DelaySyncMode.getValue() == 1)
+        delaySyncMemory.setValue(value);
+    else
+        delayFreeMemory.setValue(value);
 }
 DelayTimeKnob.setControlCallback(onDelayTimeControl);
 
@@ -206,33 +213,32 @@ DelayFeedbackKnob.setControlCallback(onDelayFeedbackControl);
 // Sync/Free mode toggle
 inline function onDelaySyncModeControl(component, value)
 {
-    // value: 0 = Free (LED off), 1 = Sync (LED on) — matches HISE TempoSync polarity
     Delay1.setAttribute(7, value);
-    
+
     if (value == 1) // Sync mode
     {
         DelayTimeKnob.set("min", 0);
         DelayTimeKnob.set("max", 18);
-        DelayTimeKnob.set("middlePosition", 9);   // linear across divisions
+        DelayTimeKnob.set("middlePosition", 9);
         DelayTimeKnob.set("stepSize", 1);
-        DelayTimeKnob.setValue(8); // default 1/8
+        DelayTimeKnob.set("defaultValue", 8);                        // double-click reset target
+        DelayTimeKnob.setValue(delaySyncMemory.getValue());           // restore last sync value
     }
     else // Free mode
     {
         DelayTimeKnob.set("min", 1);
         DelayTimeKnob.set("max", 2500);
-        DelayTimeKnob.set("middlePosition", 500); // 50% → 500 ms
+        DelayTimeKnob.set("middlePosition", 500);
         DelayTimeKnob.set("stepSize", 1);
-        DelayTimeKnob.setValue(400); // default 400ms
+        DelayTimeKnob.set("defaultValue", 400);                      // double-click reset target
+        DelayTimeKnob.setValue(delayFreeMemory.getValue());           // restore last free value
     }
-    
-    // push the new value through so audio updates immediately
-local pushValue = DelayTimeKnob.getValue();
-if (value == 1) // Sync mode
-    pushValue = pushValue + SYNC_OFFSET;
 
-Delay1.setAttribute(0, pushValue);
-Delay1.setAttribute(1, pushValue);
+    // Push the restored value through to audio immediately
+    local pushValue = DelayTimeKnob.getValue();
+    var audioPush = (value == 1) ? pushValue + SYNC_OFFSET : pushValue;
+    Delay1.setAttribute(0, audioPush);
+    Delay1.setAttribute(1, audioPush);
 }
 DelaySyncMode.setControlCallback(onDelaySyncModeControl);
 
@@ -243,6 +249,8 @@ if (DelaySyncMode.getValue() == 1)
     DelayTimeKnob.set("max", 18);
     DelayTimeKnob.set("middlePosition", 9);
     DelayTimeKnob.set("stepSize", 1);
+    DelayTimeKnob.set("defaultValue", 8);                            // double-click reset target
+    DelayTimeKnob.setValue(delaySyncMemory.getValue());
 }
 else
 {
@@ -250,56 +258,54 @@ else
     DelayTimeKnob.set("max", 2500);
     DelayTimeKnob.set("middlePosition", 500);
     DelayTimeKnob.set("stepSize", 1);
+    DelayTimeKnob.set("defaultValue", 400);                          // double-click reset target
+    DelayTimeKnob.setValue(delayFreeMemory.getValue());
 }
 
-// Delay Feedback label broadcaster
+// Push initial value through so audio matches UI on load
+local initValue = DelayTimeKnob.getValue();
+var audioInit = (DelaySyncMode.getValue() == 1) ? initValue + SYNC_OFFSET : initValue;
+Delay1.setAttribute(0, audioInit);
+Delay1.setAttribute(1, audioInit);
+
+// --- Delay Feedback label ---
 const var delayFeedbackBroadcaster = Engine.createBroadcaster({
-    "id": "delayFeedbackBroadcaster",
-    "args": ["component", "value"],
-    "tags": []
+    "id": "delayFeedbackBroadcaster", "args": ["component", "value"], "tags": []
 });
 delayFeedbackBroadcaster.attachToComponentValue(["Delay Feedback"], "");
 delayFeedbackBroadcaster.addComponentPropertyListener(
-    ["delayFeedbackValue"], 
-    ["text"], 
-    "DelayFeedbackValue", 
-    function(index, component, value)
-    {
-        return Math.round(value * 100) + "%";
-    }
+    ["delayFeedbackValue"], ["text"], "DelayFeedbackValue",
+    function(index, component, value) { return Math.round(value * 100) + "%"; }
 );
 
-// Delay Time label broadcaster (mode-aware)
+// --- Delay Time label (sync-mode aware) ---
 const var delayTimeBroadcaster = Engine.createBroadcaster({
-    "id": "delayTimeBroadcaster",
-    "args": ["component", "value"],
-    "tags": []
+    "id": "delayTimeBroadcaster", "args": ["component", "value"], "tags": []
 });
 delayTimeBroadcaster.attachToComponentValue(["Delay Time"], "");
 delayTimeBroadcaster.addComponentPropertyListener(
-    ["delayTimeValue"], 
-    ["text"], 
-    "DelayTimeValue", 
+    ["delayTimeValue"], ["text"], "DelayTimeValue",
     function(index, component, value)
     {
-        if (DelaySyncMode.getValue() == 1) // Sync mode
+        if (DelaySyncMode.getValue() == 1)
         {
             var idx = Math.round(value);
-            if (idx < 0) idx = 0;
+            if (idx < 0)  idx = 0;
             if (idx > 18) idx = 18;
             return tempoNames[idx];
         }
-        else // Free mode
+        else
         {
             return Math.round(value) + " ms";
         }
     }
 );
+
 // --- About screen links ---
-const var linkKsamplers = Content.getComponent("linkKsamplers");
-const var linkKadabra = Content.getComponent("linkKadabra");
+const var linkKsamplers   = Content.getComponent("linkKsamplers");
+const var linkKadabra     = Content.getComponent("linkKadabra");
 const var linkTribalTools = Content.getComponent("linkTribalTools");
-const var linkGithub = Content.getComponent("linkGithub");
+const var linkGithub      = Content.getComponent("linkGithub");
 
 inline function onLinkKsamplersControl(component, value)
 {
@@ -326,8 +332,7 @@ inline function onLinkGithubControl(component, value)
 linkGithub.setControlCallback(onLinkGithubControl);
 
 // =========================================================================
-// Clip LED system — production
-// L/R indexed pattern matches Delay rework convention
+// Clip LED system
 // =========================================================================
 
 const var clipLedL = Content.getComponent("clipLedL");
@@ -337,22 +342,20 @@ const var CLIP_OFF_COLOUR = 0xFF330000; // dim red, idle
 const var CLIP_ON_COLOUR  = 0xFFFF2222; // hot red, clipped
 const var CLIP_HIGHLIGHT  = 0x99FFAAAA; // glassy strip when on
 
-const var CLIP_THRESHOLD  = 0.989;      // ~ -0.1 dBFS
-const var CLIP_HOLD_MS    = 5000;       // auto-release after 1.5s
-const var CLICK_GUARD_MS  = 250;        // re-latch suppression after click
+const var CLIP_THRESHOLD = 0.989;  // ~-0.1 dBFS
+const var CLIP_HOLD_MS   = 5000;   // auto-release after 5s
+const var CLICK_GUARD_MS = 250;    // re-latch suppression after click
 
 reg clipState    = [false, false];
 reg lastClipMs   = [0.0,   0.0];
 reg clickResetMs = [0.0,   0.0];
 
-// --- Paint ---
 clipLedL.setPaintRoutine(function(g)
 {
     local w = this.getWidth();
     local h = this.getHeight();
     g.setColour(clipState[0] ? CLIP_ON_COLOUR : CLIP_OFF_COLOUR);
     g.fillRect([0, 0, w, h]);
-
     if (clipState[0])
     {
         g.setColour(CLIP_HIGHLIGHT);
@@ -366,7 +369,6 @@ clipLedR.setPaintRoutine(function(g)
     local h = this.getHeight();
     g.setColour(clipState[1] ? CLIP_ON_COLOUR : CLIP_OFF_COLOUR);
     g.fillRect([0, 0, w, h]);
-
     if (clipState[1])
     {
         g.setColour(CLIP_HIGHLIGHT);
@@ -374,7 +376,6 @@ clipLedR.setPaintRoutine(function(g)
     }
 });
 
-// --- Click to reset ---
 clipLedL.setMouseCallback(function(event)
 {
     clipState[0] = false;
@@ -389,28 +390,25 @@ clipLedR.setMouseCallback(function(event)
     clipLedR.repaint();
 });
 
-// --- Polling timer ---
 const var clipTimer = Engine.createTimerObject();
 
 clipTimer.setTimerCallback(function()
 {
     local now = Engine.getUptime() * 1000;
-
-    local pL = Globals.peakL;
-    local pR = Globals.peakR;
-
+    local pL  = Globals.peakL;
+    local pR  = Globals.peakR;
     local newL = clipState[0];
     local newR = clipState[1];
 
     if (now - clickResetMs[0] > CLICK_GUARD_MS)
     {
-        if (pL >= CLIP_THRESHOLD) { newL = true;  lastClipMs[0] = now; }
+        if (pL >= CLIP_THRESHOLD) { newL = true; lastClipMs[0] = now; }
         else if (clipState[0] && (now - lastClipMs[0] > CLIP_HOLD_MS)) newL = false;
     }
 
     if (now - clickResetMs[1] > CLICK_GUARD_MS)
     {
-        if (pR >= CLIP_THRESHOLD) { newR = true;  lastClipMs[1] = now; }
+        if (pR >= CLIP_THRESHOLD) { newR = true; lastClipMs[1] = now; }
         else if (clipState[1] && (now - lastClipMs[1] > CLIP_HOLD_MS)) newR = false;
     }
 
@@ -421,42 +419,37 @@ clipTimer.setTimerCallback(function()
 clipTimer.startTimer(30);
 
 // --- Sample folder auto-setup ---
+// IMPORTANT: Replace INSTRUMENT_NAME with the actual instrument name when forking from template
+// e.g. "Kadabra Grand", "Kadabra Electric Piano", etc.
 inline function setupSampleFolder()
 {
-    // Determine platform link file name
     local linkFileName;
     local os = Engine.getOS();
-    if (os == "OSX") linkFileName = "LinkOSX";
+    if (os == "OSX")      linkFileName = "LinkOSX";
     else if (os == "WIN") linkFileName = "LinkWindows";
-    else linkFileName = "LinkLinux";
-    
-    // Get app data folder (Application Support/IMI/Kadabra Electronic Drumkit)
+    else                  linkFileName = "LinkLinux";
+
     local appData = FileSystem.getFolder(FileSystem.AppData);
     local linkFile = appData.getChildFile(linkFileName);
-    
-    // Build expected standard samples path for this user
+
     local userHome = FileSystem.getFolder(FileSystem.UserHome);
     local standardSamples = userHome.getChildFile(
-    "Music/IMI/INSTRUMENT_NAME/Samples"
-);
-    
-    // If samples exist in standard location, write/overwrite link file
+        "Music/IMI/INSTRUMENT_NAME"
+    );
+
     if (isDefined(standardSamples) && standardSamples.isDirectory())
     {
         linkFile.writeString(standardSamples.toString(standardSamples.FullPath));
-        Console.print("Sample folder linked: " + 
+        Console.print("Sample folder linked: " +
             standardSamples.toString(standardSamples.FullPath));
     }
     else
     {
-        // Not found — HISE's built-in dialog will appear as fallback
         Console.print("Samples not found in standard location.");
     }
 }
 
-setupSampleFolder();
-
-function onNoteOn()
+setupSampleFolder();function onNoteOn()
 {
 	
 }
