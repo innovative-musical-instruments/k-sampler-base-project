@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ProjectSettings>
-  <Name value="Kadabra Percussion"/>
+  <Name value="Kadabra Base Project"/>
   <Version value="1.0.0"/>
   <Description value=""/>
-  <BundleIdentifier value="com.IMI.KadabraPercussion"/>
-  <PluginCode value="Kprc"/>
+  <BundleIdentifier value="com.IMI.KadabraBaseProject"/>
+  <PluginCode value="Kbse"/>
   <EmbedAudioFiles value="Yes"/>
   <EmbedImageFiles value="Yes"/>
   <SupportFullDynamicsHLAC value="1"/>

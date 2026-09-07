@@ -306,6 +306,8 @@ const var linkKsamplers   = Content.getComponent("linkKsamplers");
 const var linkKadabra     = Content.getComponent("linkKadabra");
 const var linkTribalTools = Content.getComponent("linkTribalTools");
 const var linkGithub      = Content.getComponent("linkGithub");
+const var linkHISE        = Content.getComponent("linkHISE");
+const var linkJUCE        = Content.getComponent("linkJUCE");
 
 inline function onLinkKsamplersControl(component, value)
 {
@@ -330,6 +332,18 @@ inline function onLinkGithubControl(component, value)
     if (value) Engine.openWebsite("https://github.com/innovative-musical-instruments/REPO_NAME");
 }
 linkGithub.setControlCallback(onLinkGithubControl);
+
+inline function onLinkHISEControl(component, value)
+{
+    if (value) Engine.openWebsite("https://hise.dev");
+}
+linkHISE.setControlCallback(onLinkHISEControl);
+
+inline function onLinkJUCEControl(component, value)
+{
+    if (value) Engine.openWebsite("https://juce.com");
+}
+linkJUCE.setControlCallback(onLinkJUCEControl);
 
 // =========================================================================
 // Clip LED system
@@ -434,7 +448,7 @@ inline function setupSampleFolder()
 
     local userHome = FileSystem.getFolder(FileSystem.UserHome);
     local standardSamples = userHome.getChildFile(
-        "Music/IMI/INSTRUMENT_NAME"
+        "Music/IMI/INSTRUMENT_NAME/Samples"
     );
 
     if (isDefined(standardSamples) && standardSamples.isDirectory())

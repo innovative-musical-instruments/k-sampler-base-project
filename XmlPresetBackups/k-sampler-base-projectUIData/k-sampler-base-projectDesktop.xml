@@ -135,6 +135,14 @@
         <Component type="ScriptButton" id="linkGithub" x="558" y="40" width="100"
                    height="70" parentComponent="aboutPanel" isMomentary="1" enableMidiLearn="0"
                    bgColour="4294967295" mouseCursor="PointingHandCursor" filmstripImage="{PROJECT_FOLDER}LinkKGIT.png"/>
+        <Component type="ScriptButton" id="linkHISE" x="67" y="124" width="32" height="18"
+                   parentComponent="aboutPanel" text="" isMomentary="1" enableMidiLearn="0"
+                   filmstripImage="{PROJECT_FOLDER}TransBtnFilmStrip-40x30.png"
+                   mouseCursor="PointingHandCursor"/>
+        <Component type="ScriptButton" id="linkJUCE" x="130" y="124" width="35" height="18"
+                   parentComponent="aboutPanel" text="" isMomentary="1" enableMidiLearn="0"
+                   filmstripImage="{PROJECT_FOLDER}TransBtnFilmStrip-40x30.png"
+                   mouseCursor="PointingHandCursor"/>
       </Component>
       <Component type="ScriptButton" id="aboutButton" x="677" y="10" parentComponent="pnlMain"
                  width="50" text="About" enableMidiLearn="0" filmstripImage="{PROJECT_FOLDER}aboutBtn2.png"/>
