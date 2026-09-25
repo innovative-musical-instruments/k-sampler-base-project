@@ -145,6 +145,17 @@ outputGainBroadcaster.addComponentPropertyListener(["outputGainValue"], ["text"]
     return Engine.doubleToString(value, 1) + "dB";
 });
 
+// Release Broadcaster
+const var releaseBroadcaster = Engine.createBroadcaster({
+  "id": "releaseBroadcaster",
+  "args": ["component", "value"],
+  "tags": []
+});
+releaseBroadcaster.attachToComponentValue(["Release"], "");
+releaseBroadcaster.addComponentPropertyListener(["releaseValue"], ["text"], "ReleaseValue", function(index, component, value){
+    return Engine.doubleToString(value, 1) + "ms";
+});
+
 // --- Presets / About panel toggles ---
 const var presetsButton = Content.getComponent("presetsButton");
 const var presetsManager = Content.getComponent("presetsManager");
