@@ -12,7 +12,7 @@
                  useUndoManager="1" filmstripImage="{PROJECT_FOLDER}knob-65x65-128f.png"
                  numStrips="128.0" height="65" width="65" isPluginParameter="1"/>
       <Component type="ScriptLabel" id="saturationValue" x="88" y="177" parentComponent="pnlMain"
-                 width="64" height="17" text="54%" editable="0" processorId="KDED_GoodGUI1"
+                 width="64" height="17" text="0%" editable="0" processorId="KDED_GoodGUI1"
                  textColour="4293454068" fontSize="11.0"/>
       <Component type="ScriptSlider" id="Brightness" x="88" y="236" useUndoManager="1"
                  tooltip="Brightness" macroControl="No MacroControl" pluginParameterName="Brightness"
@@ -86,13 +86,13 @@
                  parentComponent="pnlMain" filmstripImage="{PROJECT_FOLDER}knob-65x65-128f.png"
                  numStrips="128.0" height="65" width="65" isPluginParameter="1"/>
       <Component type="ScriptLabel" id="phaserDepthValue" x="512" y="177" parentComponent="pnlMain"
-                 width="64" height="17" text="52%" textColour="4293454068" fontSize="11.0"/>
+                 width="64" height="17" text="0%" textColour="4293454068" fontSize="11.0"/>
       <Component type="ScriptSlider" id="Phaser Rate" x="512" y="236" mode="TempoSync"
                  max="20.0" stepSize="1.0" middlePosition="9.0" parentComponent="pnlMain"
                  filmstripImage="{PROJECT_FOLDER}knob-65x65-128f.png" numStrips="128.0"
                  width="65" height="65" pluginParameterName="Phaser Rate" isPluginParameter="1"/>
       <Component type="ScriptLabel" id="phaserRateValue" x="512" y="305" width="64"
-                 height="17" parentComponent="pnlMain" text="6/1" textColour="4293454068"
+                 height="17" parentComponent="pnlMain" text="8/1" textColour="4293454068"
                  fontSize="11.0"/>
       <Component type="ScriptSlider" id="Release" x="607" y="198" width="126"
                  height="12" parentComponent="pnlMain" tooltip="Release" isPluginParameter="1"
