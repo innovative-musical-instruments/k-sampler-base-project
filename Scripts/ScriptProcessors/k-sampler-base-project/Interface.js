@@ -194,7 +194,7 @@ const var SYNC_OFFSET      = 5; // HISE_USE_EXTENDED_TEMPO_VALUES prepends 5 slo
 
 // Hidden memory knobs — saved/restored automatically by HISE with presets
 // delayFreeMemory: min=1, max=2500, default=400
-// delaySyncMemory: min=0, max=18,   default=8
+// delaySyncMemory: min=0, max=18,   default=7
 const var delayFreeMemory = Content.getComponent("delayFreeMemory");
 const var delaySyncMemory = Content.getComponent("delaySyncMemory");
 
@@ -232,7 +232,7 @@ inline function onDelaySyncModeControl(component, value)
         DelayTimeKnob.set("max", 18);
         DelayTimeKnob.set("middlePosition", 9);
         DelayTimeKnob.set("stepSize", 1);
-        DelayTimeKnob.set("defaultValue", 8);                        // double-click reset target
+        DelayTimeKnob.set("defaultValue", 7);                        // double-click reset target
         DelayTimeKnob.setValue(delaySyncMemory.getValue());           // restore last sync value
     }
     else // Free mode
@@ -260,7 +260,7 @@ if (DelaySyncMode.getValue() == 1)
     DelayTimeKnob.set("max", 18);
     DelayTimeKnob.set("middlePosition", 9);
     DelayTimeKnob.set("stepSize", 1);
-    DelayTimeKnob.set("defaultValue", 8);                            // double-click reset target
+    DelayTimeKnob.set("defaultValue", 7);                            // double-click reset target
     DelayTimeKnob.setValue(delaySyncMemory.getValue());
 }
 else
